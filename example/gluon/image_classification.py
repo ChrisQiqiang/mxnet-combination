@@ -95,6 +95,9 @@ parser.add_argument('--kvstore', type=str, default='device',
                     help='kvstore to use for trainer/module.')
 parser.add_argument('--log-interval', type=int, default=50,
                     help='Number of batches to wait before logging.')
+
+parser.add_argument('--mergenum', type=int, default=50,
+                    help='Number of tensors for merge in front of a network')
 parser.add_argument('--profile', action='store_true',
                     help='Option to turn on memory profiling for front-end, '\
                          'and prints out the memory usage by python function at the end.')
@@ -199,7 +202,8 @@ def train(opt, ctx):
                                               'wd': opt.wd,
                                               'momentum': opt.momentum,
                                               'multi_precision': True},
-                            kvstore=kv)
+                            kvstore=kv,
+                            block_num=opt.mergenum)
     print('trainer init end.')
     loss = gluon.loss.SoftmaxCrossEntropyLoss()
 
