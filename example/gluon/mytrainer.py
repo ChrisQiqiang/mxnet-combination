@@ -171,8 +171,8 @@ class mytrainer(object):
 #                     print(param_arrays[0].shape == param_arrays[1].shape)
                     if delay % self._block_num == 0 or delay == len(self._params_to_init): 
 #                             self._kvstore.init(idx, param_arrays[0])
-#                              print('initial begin')
-#                              print(idx_block)
+                             print('initial begin')
+                             print(idx_block)
                              self._kvstore.init(idx_block, param_block)
 #                              print('initial success')
                              idx_block = []
@@ -361,13 +361,13 @@ class mytrainer(object):
             self._init_kvstore()
         if self._params_to_init:
             self._init_params()
-        time1 = time.time()
+#        time1 = time.time()
         self._allreduce_grads()
-        nd.waitall()
-        time2 = time.time()
+#        nd.waitall()
+#        time2 = time.time()
         self._update(ignore_stale_grad)
-        nd.waitall()
-        time3 = time.time()
+#        nd.waitall()
+#        time3 = time.time()
 #         print('push cost time %.5f, update cost time %.5f'%(time2 - time1,time3 - time2))
 #         print('the time of push process began %.5f'%time1)
 #         print('the time of push process finished %.5f'%time2)
@@ -407,7 +407,7 @@ class mytrainer(object):
                     i_list.append(i)
                     block_num += 1
                     if block_num % self._block_num == 0 or block_num == 283:
-#                         print('is pushing i_list: ', i_list)
+                        print('is pushing i_list: ', i_list)
                         self._kvstore.push(i_list, params_list , priority=-i)
                     
                         if not self._update_on_kvstore:
@@ -536,7 +536,7 @@ class mytrainer(object):
                     list_params.append(param.list_data())
                     i_list.append(i)
                     if block_num % self._block_num == 0 or block_num == 283:
-#                         print('here is pulling layer %d'%i) # 对于每次pull都会经过这里
+                        print('here is pulling layer %d'%i) 
                         self._kvstore.pull(i_list, list_params, priority = -i)
                         list_params = []
                         i_list = []
