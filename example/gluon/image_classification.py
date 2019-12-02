@@ -200,6 +200,7 @@ def train(opt, ctx):
                                               'momentum': opt.momentum,
                                               'multi_precision': True},
                             kvstore=kv)
+    print('trainer init end.')
     loss = gluon.loss.SoftmaxCrossEntropyLoss()
 
     total_time = 0

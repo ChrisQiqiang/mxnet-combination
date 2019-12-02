@@ -73,7 +73,7 @@ class mytrainer(object):
         optimizer, its learning rate can be accessed as optimizer.learning_rate.
     """
     def __init__(self, params, optimizer, optimizer_params=None, kvstore='device',
-                 compression_params=None, update_on_kvstore=None, block_num = 3,kvstore_type = 'dist_sync'):
+                 compression_params=None, update_on_kvstore=None, block_num = 3):
         if isinstance(params, (dict, ParameterDict)):
             params = list(params.values())
         if not isinstance(params, (list, tuple)):
@@ -110,7 +110,7 @@ class mytrainer(object):
         self._params_to_init = []
         self._reset_kvstore()
         self._block_num = block_num
-        self._kvstore_type = kvstore_type
+        # self._kvstore_type = kvstore_type
 
     def _check_contexts(self):
         contexts = None
@@ -248,10 +248,10 @@ class mytrainer(object):
             arg_arrays = {param.name: param.data(self._contexts[0]) for param in self._params}
             ##modified by chris ,change the kvstore type,eg, device, local, nccl
         
-            kvstore = mx.kvstore.create(name = self._kvstore_type)
+            # kvstore = mx.kvstore.create(name = self._kvstore_type)
 #             print(kvstore.type)
 #             print(isinstance(kvstore, mx.kvstore.KVStore))
-            kvstore, update_on_kvstore = _create_kvstore(kvstore, len(self._contexts),
+            kvstore, update_on_kvstore = _create_kvstore(config['kvstore'], len(self._contexts),
                                                          arg_arrays)
             print('The type of kvstore: ', kvstore.type)
         
