@@ -172,12 +172,13 @@ class mytrainer(object):
 #                     print(param_arrays[0].shape == param_arrays[1].shape)
                     elif delay == self._block_num:
 #                             self._kvstore.init(idx, param_arrays[0])
-                            #  print('initial begin')
-                            #  print(idx_block)
+                             print('initial begin')
+                             print(idx_block)
                              self._kvstore.init(idx_block, param_block)
-#                              print('initial success')
-                    else:
+                             print('initial success')
+                    else: 
                         self._kvstore.init(idx, param_arrays)
+                        print('init end', idx)
 #                     if param._stype == 'default':
 #                         self._kvstore.pull(idx, param_arrays, priority=-idx)
 #                         print(len(param_arrays))
@@ -409,13 +410,14 @@ class mytrainer(object):
                         params_list.append(param.list_grad())
                         i_list.append(i)
                     elif block_num == self._block_num:
-                        # print('is pushing i_list: ', i_list)
+                        print('is pushing i_list: ', i_list)
                         self._kvstore.push(i_list, params_list , priority=-i)
                     
                         if not self._update_on_kvstore:
                             self._kvstore.pull(i_list, params_list, priority=-i,
                                            ignore_sparse=self._distributed)
                     else:
+                        print('is pushing i: ', i)
                         self._kvstore.push(i, param.list_grad(), priority=-i)
                         if not self._update_on_kvstore:
                             self._kvstore.pull(i,param.list_grad(), priority=-i,

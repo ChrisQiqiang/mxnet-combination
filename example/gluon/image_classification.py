@@ -20,6 +20,7 @@ from __future__ import division
 import argparse, time, os
 import logging
 import mytrainer
+import trainer2
 import mxnet as mx
 from mxnet import gluon
 from mxnet import profiler
@@ -197,7 +198,7 @@ def train(opt, ctx):
 
     train_data, val_data = get_data_iters(dataset, batch_size, opt)
     net.collect_params().reset_ctx(ctx)
-    trainer = mytrainer.mytrainer(net.collect_params(), 'sgd',
+    trainer = trainer2.mytrainer(net.collect_params(), 'sgd',
                             optimizer_params={'learning_rate': opt.lr,
                                               'wd': opt.wd,
                                               'momentum': opt.momentum,
