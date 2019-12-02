@@ -194,7 +194,7 @@ def train(opt, ctx):
 
     train_data, val_data = get_data_iters(dataset, batch_size, opt)
     net.collect_params().reset_ctx(ctx)
-    trainer = mytrainer.mytrianer(net.collect_params(), 'sgd',
+    trainer = mytrainer.mytrainer(net.collect_params(), 'sgd',
                             optimizer_params={'learning_rate': opt.lr,
                                               'wd': opt.wd,
                                               'momentum': opt.momentum,
